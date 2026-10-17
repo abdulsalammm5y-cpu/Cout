@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Stuffout Landing Page"
+description = "The Stuffout marketing landing page: clearance, resale and payout for storage units, houses, estates and closing businesses, published on its own without the dashboard, auth screens, or backend."
+version = "1.0.0"
+id = "artifacts/bizlit-landing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24409
+
+[services.development]
+run = "pnpm --filter @workspace/bizlit-landing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bizlit-landing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bizlit-landing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24409"
+BASE_PATH = "/"
